@@ -67,8 +67,9 @@ IOPINSENS_EVTHOOK s_GpIOSenseEvt[IOPIN_MAX_INT] = { {0, NULL}, };
  * 			Dir     : I/O direction
  *			Resistor : Resistor config
  *			Type	: I/O type
+ *			Sense   : Sense type
  */
-void IOPinConfig(int PortNo, int PinNo, int PinOp, IOPINDIR Dir, IOPINRES Resistor, IOPINTYPE Type)
+void IOPinConfig(int PortNo, int PinNo, int PinOp, IOPINDIR Dir, IOPINRES Resistor, IOPINTYPE Type, IOPINSENSE Sense)
 {
 	uint32_t cnf = 0;
 
@@ -100,6 +101,17 @@ void IOPinConfig(int PortNo, int PinNo, int PinOp, IOPINDIR Dir, IOPINRES Resist
 			break;
 	}
 
+	switch (Sense)
+	{
+		case IOPINSENSE_LOW_TRANSITION:
+			cnf |= (3  << GPIO_PIN_CNF_SENSE_Pos);
+			break;
+		case IOPINSENSE_HIGH_TRANSITION:
+			cnf |= (1  << GPIO_PIN_CNF_SENSE_Pos);
+			break;
+		case IOPINSENSE_TOGGLE:
+			break;
+	}
 	NRF_GPIO->PIN_CNF[PinNo] = cnf;
 }
 
@@ -195,7 +207,7 @@ void __WEAK GPIOTE_IRQHandler(void)
 {
 	for (int i = 0; i < IOPIN_MAX_INT; i++)
 	{
-		if (NRF_GPIOTE->EVENTS_IN[i] || NRF_GPIOTE->EVENTS_PORT)
+		if (NRF_GPIOTE->EVENTS_IN[i])// || NRF_GPIOTE->EVENTS_PORT)
 		{
 			if (s_GpIOSenseEvt[i].SensEvtCB)
 				s_GpIOSenseEvt[i].SensEvtCB(i);

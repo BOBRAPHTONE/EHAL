@@ -56,18 +56,18 @@ void LedMxIOInit(LEDMXDEV *pLedMxDev, LEDMXCFG *pCfg)
     pLedMxDev->pIODev = (void *)&g_LmxIODev;
 
     pdev->WrPin = pcfg->WrPin;
-    IOPinConfig(0, pdev->WrPin, 0, IOPINDIR_OUTPUT, IOPINRES_PULLUP, IOPINTYPE_NORMAL);
+    IOPinConfig(0, pdev->WrPin, 0, IOPINDIR_OUTPUT, IOPINRES_PULLUP, IOPINTYPE_NORMAL, IOPINSENSE_NONE);
 	IOPinSet(0, pdev->WrPin);
 
     pdev->RdPin = pcfg->RdPin;
-    IOPinConfig(0, pdev->RdPin, 0, IOPINDIR_INPUT, IOPINRES_PULLUP, IOPINTYPE_NORMAL);
+    IOPinConfig(0, pdev->RdPin, 0, IOPINDIR_INPUT, IOPINRES_PULLUP, IOPINTYPE_NORMAL, IOPINSENSE_NONE);
 	IOPinSet(0, pdev->RdPin);
 
     pdev->DataPin = pcfg->DataPin;
-    IOPinConfig(0, pdev->DataPin, 0, IOPINDIR_OUTPUT, IOPINRES_FOLLOW, IOPINTYPE_NORMAL);
+    IOPinConfig(0, pdev->DataPin, 0, IOPINDIR_OUTPUT, IOPINRES_FOLLOW, IOPINTYPE_NORMAL, IOPINSENSE_NONE);
 
     pdev->EnPin = pcfg->EnPin;
-    IOPinConfig(0, pdev->EnPin, 0, IOPINDIR_OUTPUT, IOPINRES_PULLUP, IOPINTYPE_NORMAL);
+    IOPinConfig(0, pdev->EnPin, 0, IOPINDIR_OUTPUT, IOPINRES_PULLUP, IOPINTYPE_NORMAL, IOPINSENSE_NONE);
 	IOPinSet(0, pdev->EnPin);
 
 	for (int i = 0; i < LEDMX_MAX_ADDRPIN; i++)
@@ -75,7 +75,7 @@ void LedMxIOInit(LEDMXDEV *pLedMxDev, LEDMXCFG *pCfg)
         pdev->CsPins[i] = pcfg->CsPins[i];
 		if (pdev->CsPins[i] >= 0)
 		{
-		    IOPinConfig(0, pdev->CsPins[i], 0, IOPINDIR_OUTPUT, IOPINRES_PULLDOWN, IOPINTYPE_NORMAL);
+		    IOPinConfig(0, pdev->CsPins[i], 0, IOPINDIR_OUTPUT, IOPINRES_PULLDOWN, IOPINTYPE_NORMAL, IOPINSENSE_NONE);
 			IOPinClear(0, pdev->CsPins[i]);
 		}
 	}

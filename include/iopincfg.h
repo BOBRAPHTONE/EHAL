@@ -60,6 +60,7 @@ typedef enum __iopin_type {
 } IOPINTYPE;
 
 typedef enum __iopin_sense {
+	IOPINSENSE_NONE,				// No sense or disable
 	IOPINSENSE_LOW_TRANSITION,		// Event on falling edge
 	IOPINSENSE_HIGH_TRANSITION,		// Event on raising edge
 	IOPINSENSE_TOGGLE,				// Event on state change
@@ -74,6 +75,7 @@ typedef struct __iopin_cfg {
 	IOPINDIR	PinDir;		// Pin direction
 	IOPINRES 	Res;		// Pin resistor setting
 	IOPINTYPE	Type;		// I/O type
+	IOPINSENSE	Sense;		// Pin sense
 } IOPINCFG;
 
 #pragma pack(pop)
@@ -95,9 +97,10 @@ extern "C" {
  * 			Dir     : I/O direction
  *			Resistor : Resistor config
  *			Type 	: I/O type
+ *			Sense	: Sense type
  *
  */
-void IOPinConfig(int PortNo, int PinNo, int PinOp, IOPINDIR Dir, IOPINRES Resistor, IOPINTYPE Type);
+void IOPinConfig(int PortNo, int PinNo, int PinOp, IOPINDIR Dir, IOPINRES Resistor, IOPINTYPE Type, IOPINSENSE Sense);
 
 /**
  * @brief Configure I/O pin with IOPIN_CFG data structure. Can be used for batch configuration
@@ -112,7 +115,7 @@ static inline void IOPinCfg(const IOPINCFG *pCfg, int NbPins) {
 	for (int i = 0; i < NbPins; i++)
 	{
 		IOPinConfig(pCfg[i].PortNo, pCfg[i].PinNo, pCfg[i].PinOp, pCfg[i].PinDir,
-					pCfg[i].Res, pCfg[i].Type);
+					pCfg[i].Res, pCfg[i].Type, pCfg[i].Sense);
 	}
 }
 

@@ -1074,7 +1074,7 @@ bool BleAppInit(const BLEAPP_CFG *pBleAppCfg, bool bEraseBond)
     if (pBleAppCfg->ConnLedPort != -1 && pBleAppCfg->ConnLedPin != -1)
     {
     	IOPinConfig(pBleAppCfg->ConnLedPort, pBleAppCfg->ConnLedPin, 0,
-    				IOPINDIR_OUTPUT, IOPINRES_NONE, IOPINTYPE_NORMAL);
+    				IOPINDIR_OUTPUT, IOPINRES_NONE, IOPINTYPE_NORMAL, IOPINSENSE_NONE);
     }
 
     g_BleAppData.AppMode = pBleAppCfg->AppMode;
