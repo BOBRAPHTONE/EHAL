@@ -269,8 +269,8 @@ void nRF52I2CReset(DEVINTRF *pDev)
 
     nRF52I2CDisable(pDev);
 
-    IOPinConfig(0, dev->pReg->PSEL.SCL, 0, IOPINDIR_OUTPUT, IOPINRES_NONE, IOPINTYPE_NORMAL);
-    IOPinConfig(0, dev->pReg->PSEL.SDA, 0, IOPINDIR_INPUT, IOPINRES_NONE, IOPINTYPE_NORMAL);
+    IOPinConfig(0, dev->pReg->PSEL.SCL, 0, IOPINDIR_OUTPUT, IOPINRES_NONE, IOPINTYPE_NORMAL, IOPINSENSE_NONE);
+    IOPinConfig(0, dev->pReg->PSEL.SDA, 0, IOPINDIR_INPUT, IOPINRES_NONE, IOPINTYPE_NORMAL, IOPINSENSE_NONE);
 
     IOPinSet(0, dev->pReg->PSEL.SDA);
 
@@ -281,7 +281,7 @@ void nRF52I2CReset(DEVINTRF *pDev)
         IOPinClear(0, dev->pReg->PSEL.SCL);
         usDelay(5);
     }
-    IOPinConfig(0, dev->pReg->PSEL.SDA, 0, IOPINDIR_OUTPUT, IOPINRES_NONE, IOPINTYPE_NORMAL);
+    IOPinConfig(0, dev->pReg->PSEL.SDA, 0, IOPINDIR_OUTPUT, IOPINRES_NONE, IOPINTYPE_NORMAL, IOPINSENSE_NONE);
     IOPinClear(0, dev->pReg->PSEL.SDA);
     usDelay(5);
     IOPinSet(0, dev->pReg->PSEL.SCL);
